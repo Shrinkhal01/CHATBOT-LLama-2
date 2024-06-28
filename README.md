@@ -1,16 +1,16 @@
 ```markdown
-##Ollama Chatbot
+Ollama Chatbot
 
 Ollama Chatbot is a responsive web application that allows users to interact with an AI-powered bot using Flask, HTML, CSS, and jQuery. The bot is powered by the Ollama Llama 2 model for generating responses.
 
-## Features
+Features
 
 - **Real-time Messaging**: Instantaneous chat interaction with the bot.
 - **Chat History**: View and scroll through previous conversations.
 - **User-friendly Interface**: Designed for easy navigation and interaction.
 - **Responsive Design**: Works seamlessly across devices.
 
-## Installation
+Installation
 
 1. **Clone the repository:**
 
@@ -71,5 +71,3 @@ Feel free to contribute to this project! Fork it and submit a pull request with 
 
 This project was developed by **Shrinkhal**. Contact me at `shrinkhalshrinkhal22@gmail.com` for any questions or feedback.
 ```
-
-This format provides a structured and visually appealing README.md for your Ollama Chatbot GitHub repository. Adjust paths, details, and sections as needed for your specific project setup.
