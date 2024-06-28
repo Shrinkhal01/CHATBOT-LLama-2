@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ollama Chatbot</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #chat-container {
+            width: 90%;
+            max-width: 1600px;
+            height: 90%;
+            max-height: 90%;
+            background-color: #2c2c2c;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            overflow: hidden;
+        }
+
+        #chat-history-container {
+            width: 30%;
+            height: 100%;
+            background-color: #1e1e1e;
+            border-right: 1px solid #444;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        #chat-history-container h2 {
+            margin: 0 0 20px 0;
+            text-align: center;
+        }
+
+        .chat-history-item {
+            padding: 10px;
+            border-bottom: 1px solid #444;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .chat-history-item:hover {
+            background-color: #333;
+        }
+
+        #chat-interface {
+            width: 70%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chat-heading {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid #444;
+            background-color: #2c2c2c;
+        }
+
+        #chat-history {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #2c2c2c;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-message, .bot-message {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .user-message {
+            justify-content: flex-end;
+        }
+
+        .bot-message {
+            justify-content: flex-start;
+        }
+
+        .user-message .message-text, .bot-message .message-text {
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user-message .message-text {
+            background-color: #0078D7;
+            color: white;
+            text-align: right;
+            border-bottom-right-radius: 0;
+        }
+
+        .bot-message .message-text {
+            background-color: #3a3a3a;
+            color: white;
+            text-align: left;
+            border-bottom-left-radius: 0;
+        }
+
+        .dp {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-message .dp {
+            order: 2;
+            margin-left: 10px;
+        }
+
+        .bot-message .dp {
+            order: 1;
+        }
+
+        #input-container {
+            display: flex;
+            padding: 20px;
+            border-top: 1px solid #444;
+            background-color: #2c2c2c;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #444;
+            background-color: #1e1e1e;
+            color: white;
+            font-size: 16px;
+        }
+
+        #send-button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 10px;
+            background-color: #0078D7;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        #send-button:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        #send-button:active {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-history-container">
+            <h2>Chat History</h2>
+            <div id="chat-history-list">
+                <!-- Chat history will be loaded here -->
+            </div>
+        </div>
+        <div id="chat-interface">
+            <div id="chat-heading">
+                <h2>Ollama Chatbot</h2>
+            </div>
+            <div id="chat-history"></div>
+            <div id="input-container">
+                <input type="text" id="user-input" placeholder="Type your message here...">
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Load chat history from the server
+            function loadChatHistory() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/history',
+                    success: function(history) {
+                        history.forEach(function(chat) {
+                            $('#chat-history-list').append(
+                                '<div class="chat-history-item">' + chat + '</div>'
+                            );
+                        });
+                    },
+                    error: function() {
+                        $('#chat-history-list').append(
+                            '<div class="chat-history-item">Error loading chat history.</div>'
+                        );
+                    }
+                });
+            }
+
+            loadChatHistory();
+
+            function sendMessage() {
+                var userInput = $('#user-input').val();
+                if (userInput.trim() !== '') {
+                    $('#chat-history').append(
+                        '<div class="user-message">' +
+                        '<div class="message-text">' + userInput + '</div>' +
+                        '<img src="/static/user.jpg" class="dp">' +
+                        '</div>'
+                    );
+                    $('#user-input').val('');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/chat',
+                        data: {'user_input': userInput},
+                        success: function(response) {
+                            $('#chat-history').append(
+                                '<div class="bot-message">' +
+                                '<img src="/static/artificial-intelligence.png" class="dp">' +
+                                '<div class="message-text">' + response.response + '</div>' +
+                                '</div>'
+                            );
+                            $('#chat-history').scrollTop($('#chat-history')[0].scrollHeight);
+                        },
+                        error: function() {
+                            $('#chat-history').append(
+                                '<div class="bot-message">' +
+                                '<img src="/static/artificial-intelligence.png" class="dp">' +
+                                '<div class="message-text">Error: Failed to generate response.</div>' +
+                                '</div>'
+                            );
+                            $('#chat-history').scrollTop($('#chat-history')[0].scrollHeight);
+                        }
+                    });
+                }
+            }
+
+            $('#send-button').click(function() {
+                sendMessage();
+            });
+
+            $('#user-input').keypress(function(event) {
+                if (event.keyCode === 13) {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
