@@ -1,9 +1,7 @@
 ```markdown
-# Ollama Chatbot
+##Ollama Chatbot
 
 Ollama Chatbot is a responsive web application that allows users to interact with an AI-powered bot using Flask, HTML, CSS, and jQuery. The bot is powered by the Ollama Llama 2 model for generating responses.
-
-![Screenshot](path_to_screenshot.png)
 
 ## Features
 
