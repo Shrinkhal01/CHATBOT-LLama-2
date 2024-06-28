@@ -1,5 +1,3 @@
-Certainly! Here's the entire README.md formatted as a code block for a cleaner and more organized appearance:
-
 ```markdown
 # Ollama Chatbot
 
