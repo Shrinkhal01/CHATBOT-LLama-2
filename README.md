@@ -5,10 +5,10 @@ Ollama Chatbot is a responsive web application that allows users to interact wit
 
 Features
 
-- **Real-time Messaging**: Instantaneous chat interaction with the bot.
-- **Chat History**: View and scroll through previous conversations.
-- **User-friendly Interface**: Designed for easy navigation and interaction.
-- **Responsive Design**: Works seamlessly across devices.
+- Real-time Messaging: Instantaneous chat interaction with the bot.
+- Chat History: View and scroll through previous conversations.
+- User-friendly Interface: Designed for easy navigation and interaction.
+- Responsive Design: Works seamlessly across devices.
 
 Installation
 
