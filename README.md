@@ -27,7 +27,7 @@ Installation
 
 3. **Download the Ollama Llama 2 model:**
 
-   You can download the pre-trained Ollama Llama 2 model from the [Ollama GitHub repository](https://github.com/ollama/llama2).
+   You can download the pre-trained Ollama Llama 2 model from the link-"[Ollama GitHub repository](https://github.com/ollama/llama2)."
 
 4. **Run the application:**
 
