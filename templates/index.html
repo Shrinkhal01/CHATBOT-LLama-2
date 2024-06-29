@@ -6,9 +6,11 @@
     <title>Ollama Chatbot</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1e1e1e;
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
             color: #ffffff;
             margin: 0;
             padding: 0;
@@ -19,20 +21,28 @@
         }
 
         #chat-container {
-            width: 90%;
-            max-width: 1600px;
-            height: 90%;
-            max-height: 90%;
-            background-color: #2c2c2c;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: flex;
-            overflow: hidden;
-        }
+    width: 90%;
+    max-width: 1600px;
+    height: 90%; /* Adjust height as needed */
+    max-height: 90%; /* Adjust max-height as needed */
+    background-color: #2c2c2c;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    overflow: hidden;
+    margin: 10px; /* Add margin to create space around the chat container */
+}
 
-        #chat-history-container {
-            display: none; /* Hide chat history container */
-        }
+#chat-history {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #2c2c2c;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0; /* Remove any default margin */
+}
 
         #chat-interface {
             width: 100%;
@@ -41,75 +51,62 @@
             flex-direction: column;
         }
 
-        #chat-history {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background-color: #2c2c2c;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
+        
         .message-container {
             display: flex;
             align-items: flex-start;
             margin-bottom: 10px;
         }
 
-        .user-avatar {
+        .user-avatar, .bot-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
+        }
+
+        .user-avatar {
             margin-right: 10px;
         }
 
         .bot-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
             margin-left: 10px;
         }
 
         .user-message-container {
-            align-self: flex-end; /* Aligns user messages to the right */
+            align-self: flex-end;
             margin-left: auto;
-            margin-right: 20px; /* Adds spacing between message and avatar */
+            margin-right: 10px;
         }
 
         .bot-message-container {
-            align-self: flex-start; /* Aligns bot messages to the left */
+            align-self: flex-start;
             margin-right: auto;
-            margin-left: 20px; /* Adds spacing between message and avatar */
+            margin-left: 10px;
+        }
+
+        .user-message, .bot-message {
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 16px;
+            max-width: 80%;
+            word-wrap: break-word;
         }
 
         .user-message {
             background-color: #0078D7;
             color: white;
-            border-bottom-right-radius: 0;
-            border-bottom-left-radius: 10px;
-            padding: 15px;
-            font-size: 16px;
-            max-width: 80%;
-            word-wrap: break-word;
         }
 
         .bot-message {
             background-color: #3a3a3a;
             color: white;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 10px;
-            padding: 15px;
-            font-size: 16px;
-            max-width: 80%;
-            word-wrap: break-word;
         }
 
         #input-container {
             display: flex;
             padding: 20px;
+            background-color: #1e1e1e;
             border-top: 1px solid #444;
-            background-color: #2c2c2c;
         }
 
         #user-input {
@@ -117,7 +114,7 @@
             padding: 10px;
             border-radius: 10px;
             border: 1px solid #444;
-            background-color: #1e1e1e;
+            background-color: #2a2a2a;
             color: white;
             font-size: 16px;
         }
@@ -142,11 +139,22 @@
         #send-button:active {
             transform: scale(1);
         }
+
+        #chatbot-heading {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            border-bottom: 1px solid #444;
+        }
     </style>
 </head>
 <body>
     <div id="chat-container">
         <div id="chat-interface">
+            <div id="chatbot-heading">Ollama-based Chatbot</div>
             <div id="chat-history"></div>
             <div id="input-container">
                 <input type="text" id="user-input" placeholder="Type your message here...">
