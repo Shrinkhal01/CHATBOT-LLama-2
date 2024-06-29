@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import requests
 import json
+import os
 
 app = Flask(__name__)
 
@@ -8,9 +9,19 @@ class OllamaChatbot:
     def __init__(self, base_url, model):
         self.base_url = base_url
         self.model = model
-        self.chat_history = []
+        self.chat_history = self.load_chat_history()
         self.system_prompt = ""
         self.keep_alive = "10m"
+
+    def load_chat_history(self):
+        if os.path.exists("chat_history.json"):
+            with open("chat_history.json", "r") as file:
+                return json.load(file)
+        return []
+
+    def save_chat_history(self):
+        with open("chat_history.json", "w") as file:
+            json.dump(self.chat_history, file)
 
     def generate_completion(self, prompt, system_message="", stream=True):
         headers = {"Content-Type": "application/json"}
@@ -50,6 +61,7 @@ class OllamaChatbot:
             for message in self.generate_completion(prompt, self.system_prompt):
                 full_message += message
             self.chat_history.append({"role": "bot", "content": full_message})
+            self.save_chat_history()
             return full_message
         except requests.exceptions.RequestException as e:
             print(f"\nError: {e}")
@@ -57,7 +69,11 @@ class OllamaChatbot:
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    base_url = "http://localhost:11434"
+    model = "llama2:latest"
+    chatbot = OllamaChatbot(base_url, model)
+    chat_history = chatbot.chat_history
+    return render_template('index.html', chat_history=chat_history)
 
 @app.route('/chat', methods=['POST'])
 def handle_chat():
