@@ -32,7 +32,7 @@ Copy code
 python app.py
 Open your web browser:
 
-Navigate to http://localhost:5000 to start using the chatbot.
+Navigate to [http://localhost:5000](http://127.0.0.1:5000)  to start using the chatbot, this is what the link was on my laptop
 
 File Structure
 app.py: Backend Flask application handling bot interactions.
