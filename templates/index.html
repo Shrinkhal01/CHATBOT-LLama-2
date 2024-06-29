@@ -41,7 +41,6 @@
 
         #chat-history-container h2 {
             margin: 0 0 20px 0;
-            text-align: center;
         }
 
         .chat-history-item {
@@ -62,13 +61,6 @@
             flex-direction: column;
         }
 
-        #chat-heading {
-            text-align: center;
-            padding: 20px;
-            border-bottom: 1px solid #444;
-            background-color: #2c2c2c;
-        }
-
         #chat-history {
             flex: 1;
             padding: 20px;
@@ -76,58 +68,32 @@
             background-color: #2c2c2c;
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
         }
 
         .user-message, .bot-message {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
-
-        .user-message {
-            justify-content: flex-end;
-        }
-
-        .bot-message {
-            justify-content: flex-start;
-        }
-
-        .user-message .message-text, .bot-message .message-text {
             padding: 15px;
+            margin-bottom: 10px;
             border-radius: 10px;
             font-size: 16px;
             max-width: 80%;
             word-wrap: break-word;
         }
 
-        .user-message .message-text {
+        .user-message {
             background-color: #0078D7;
             color: white;
             text-align: right;
+            align-self: flex-end;
             border-bottom-right-radius: 0;
         }
 
-        .bot-message .message-text {
+        .bot-message {
             background-color: #3a3a3a;
             color: white;
             text-align: left;
+            align-self: flex-start;
             border-bottom-left-radius: 0;
-        }
-
-        .dp {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .user-message .dp {
-            order: 2;
-            margin-left: 10px;
-        }
-
-        .bot-message .dp {
-            order: 1;
         }
 
         #input-container {
@@ -173,14 +139,12 @@
     <div id="chat-container">
         <div id="chat-history-container">
             <h2>Chat History</h2>
-            <div id="chat-history-list">
-                <!-- Chat history will be loaded here -->
-            </div>
+            <div class="chat-history-item">Chat 1</div>
+            <div class="chat-history-item">Chat 2</div>
+            <div class="chat-history-item">Chat 3</div>
+            <!-- Add more chat history items as needed -->
         </div>
         <div id="chat-interface">
-            <div id="chat-heading">
-                <h2>Ollama Chatbot</h2>
-            </div>
             <div id="chat-history"></div>
             <div id="input-container">
                 <input type="text" id="user-input" placeholder="Type your message here...">
@@ -191,37 +155,10 @@
 
     <script>
         $(document).ready(function() {
-            // Load chat history from the server
-            function loadChatHistory() {
-                $.ajax({
-                    type: 'GET',
-                    url: '/history',
-                    success: function(history) {
-                        history.forEach(function(chat) {
-                            $('#chat-history-list').append(
-                                '<div class="chat-history-item">' + chat + '</div>'
-                            );
-                        });
-                    },
-                    error: function() {
-                        $('#chat-history-list').append(
-                            '<div class="chat-history-item">Error loading chat history.</div>'
-                        );
-                    }
-                });
-            }
-
-            loadChatHistory();
-
             function sendMessage() {
                 var userInput = $('#user-input').val();
                 if (userInput.trim() !== '') {
-                    $('#chat-history').append(
-                        '<div class="user-message">' +
-                        '<div class="message-text">' + userInput + '</div>' +
-                        '<img src="/static/user.jpg" class="dp">' +
-                        '</div>'
-                    );
+                    $('#chat-history').append('<div class="user-message">You: ' + userInput + '</div>');
                     $('#user-input').val('');
 
                     $.ajax({
@@ -229,21 +166,11 @@
                         url: '/chat',
                         data: {'user_input': userInput},
                         success: function(response) {
-                            $('#chat-history').append(
-                                '<div class="bot-message">' +
-                                '<img src="/static/artificial-intelligence.png" class="dp">' +
-                                '<div class="message-text">' + response.response + '</div>' +
-                                '</div>'
-                            );
+                            $('#chat-history').append('<div class="bot-message">Bot: ' + response.response + '</div>');
                             $('#chat-history').scrollTop($('#chat-history')[0].scrollHeight);
                         },
                         error: function() {
-                            $('#chat-history').append(
-                                '<div class="bot-message">' +
-                                '<img src="/static/artificial-intelligence.png" class="dp">' +
-                                '<div class="message-text">Error: Failed to generate response.</div>' +
-                                '</div>'
-                            );
+                            $('#chat-history').append('<div class="bot-message">Bot: Error: Failed to generate response.</div>');
                             $('#chat-history').scrollTop($('#chat-history')[0].scrollHeight);
                         }
                     });
