@@ -48,7 +48,7 @@ Viewing Chat History:
 Scroll through the chat history displayed on the left side of the interface.
 
 Screenshots
-img/ss.png
+ss.jpg
 
 License
 This project is licensed under the MIT License. See the LICENSE file for details.
