@@ -48,7 +48,8 @@ Viewing Chat History:
 Scroll through the chat history displayed on the left side of the interface.
 
 Screenshots
-ss.jpg
+![ss](https://github.com/Shrinkhal01/CHATBOT-LLama-2/assets/97280075/8bc6a6d0-4cb8-4ab7-8439-004829c2942b)
+
 
 License
 This project is licensed under the MIT License. See the LICENSE file for details.
