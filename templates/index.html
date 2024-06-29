@@ -31,31 +31,11 @@
         }
 
         #chat-history-container {
-            width: 30%;
-            height: 100%;
-            background-color: #1e1e1e;
-            border-right: 1px solid #444;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        #chat-history-container h2 {
-            margin: 0 0 20px 0;
-        }
-
-        .chat-history-item {
-            padding: 10px;
-            border-bottom: 1px solid #444;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .chat-history-item:hover {
-            background-color: #333;
+            display: none; /* Hide chat history container */
         }
 
         #chat-interface {
-            width: 70%;
+            width: 100%;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -71,29 +51,58 @@
             align-items: flex-start;
         }
 
-        .user-message, .bot-message {
-            padding: 15px;
+        .message-container {
+            display: flex;
+            align-items: flex-start;
             margin-bottom: 10px;
-            border-radius: 10px;
-            font-size: 16px;
-            max-width: 80%;
-            word-wrap: break-word;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .bot-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        .user-message-container {
+            align-self: flex-end; /* Aligns user messages to the right */
+            margin-left: auto;
+            margin-right: 20px; /* Adds spacing between message and avatar */
+        }
+
+        .bot-message-container {
+            align-self: flex-start; /* Aligns bot messages to the left */
+            margin-right: auto;
+            margin-left: 20px; /* Adds spacing between message and avatar */
         }
 
         .user-message {
             background-color: #0078D7;
             color: white;
-            text-align: right;
-            align-self: flex-end;
             border-bottom-right-radius: 0;
+            border-bottom-left-radius: 10px;
+            padding: 15px;
+            font-size: 16px;
+            max-width: 80%;
+            word-wrap: break-word;
         }
 
         .bot-message {
             background-color: #3a3a3a;
             color: white;
-            text-align: left;
-            align-self: flex-start;
             border-bottom-left-radius: 0;
+            border-bottom-right-radius: 10px;
+            padding: 15px;
+            font-size: 16px;
+            max-width: 80%;
+            word-wrap: break-word;
         }
 
         #input-container {
@@ -137,13 +146,6 @@
 </head>
 <body>
     <div id="chat-container">
-        <div id="chat-history-container">
-            <h2>Chat History</h2>
-            <div class="chat-history-item">Chat 1</div>
-            <div class="chat-history-item">Chat 2</div>
-            <div class="chat-history-item">Chat 3</div>
-            <!-- Add more chat history items as needed -->
-        </div>
         <div id="chat-interface">
             <div id="chat-history"></div>
             <div id="input-container">
@@ -155,10 +157,28 @@
 
     <script>
         $(document).ready(function() {
+            const chatHistory = {{ chat_history | tojson | safe }}; // Assuming this is correctly populated by Flask
+
+            function appendMessage(role, message) {
+                const avatar = role === 'user' ? 'static/user.jpg' : 'static/artificial-intelligence.png';
+                const messageClass = role === 'user' ? 'user-message' : 'bot-message';
+                const containerClass = role === 'user' ? 'user-message-container' : 'bot-message-container';
+
+                const messageContainer = `
+                    <div class="message-container ${containerClass}">
+                        <img src="${avatar}" alt="Avatar" class="${role}-avatar">
+                        <div class="${messageClass}">${message}</div>
+                    </div>
+                `;
+
+                $('#chat-history').append(messageContainer);
+                $('#chat-history').scrollTop($('#chat-history')[0].scrollHeight);
+            }
+
             function sendMessage() {
                 var userInput = $('#user-input').val();
                 if (userInput.trim() !== '') {
-                    $('#chat-history').append('<div class="user-message">You: ' + userInput + '</div>');
+                    appendMessage('user', userInput);
                     $('#user-input').val('');
 
                     $.ajax({
@@ -166,12 +186,10 @@
                         url: '/chat',
                         data: {'user_input': userInput},
                         success: function(response) {
-                            $('#chat-history').append('<div class="bot-message">Bot: ' + response.response + '</div>');
-                            $('#chat-history').scrollTop($('#chat-history')[0].scrollHeight);
+                            appendMessage('bot', response.response);
                         },
                         error: function() {
-                            $('#chat-history').append('<div class="bot-message">Bot: Error: Failed to generate response.</div>');
-                            $('#chat-history').scrollTop($('#chat-history')[0].scrollHeight);
+                            appendMessage('bot', 'Error: Failed to generate response.');
                         }
                     });
                 }
@@ -185,6 +203,11 @@
                 if (event.keyCode === 13) {
                     sendMessage();
                 }
+            });
+
+            // Display initial chat history
+            chatHistory.forEach(item => {
+                appendMessage(item.role, item.content);
             });
         });
     </script>
