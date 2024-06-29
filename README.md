@@ -8,6 +8,7 @@ Ollama Chatbot is a responsive web application that allows users to interact wit
 - Chat History: View and scroll through previous conversations.
 - User-friendly Interface: Designed for easy navigation and interaction.
 - Responsive Design: Works seamlessly across devices.
+- **Chat History Storage:** Stores chat history in `chat_history.json` for persistent conversation history.
 
 ## Installation
 
@@ -32,7 +33,7 @@ Copy code
 python app.py
 Open your web browser:
 
-Navigate to [http://localhost:5000](http://127.0.0.1:5000)  to start using the chatbot, this is what the link was on my laptop
+Navigate to http://localhost:5000 to start using the chatbot.
 
 File Structure
 app.py: Backend Flask application handling bot interactions.
@@ -40,6 +41,7 @@ templates/index.html: Frontend HTML providing the chat interface.
 static/:
 artificial-intelligence.png: Bot avatar image.
 user.jpg: User avatar image.
+chat_history.json: Stores chat history for persistent conversations.
 Usage
 Sending Messages:
 Type your message in the input field and press Enter or click Send to send it.
@@ -48,7 +50,6 @@ Viewing Chat History:
 Scroll through the chat history displayed on the left side of the interface.
 
 Screenshots
-![ss](https://github.com/Shrinkhal01/CHATBOT-LLama-2/assets/97280075/8bc6a6d0-4cb8-4ab7-8439-004829c2942b)
 
 
 License
