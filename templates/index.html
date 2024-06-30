@@ -165,7 +165,7 @@
 
     <script>
         $(document).ready(function() {
-            const chatHistory = {{ chat_history | tojson | safe }}; // Assuming this is correctly populated by Flask
+const chatHistory = JSON.parse('{{ chat_history | tojson }}'); 
 
             function appendMessage(role, message) {
                 const avatar = role === 'user' ? 'static/user.jpg' : 'static/artificial-intelligence.png';
