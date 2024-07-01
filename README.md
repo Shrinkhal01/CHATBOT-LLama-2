@@ -3,6 +3,7 @@
 The Ollama Chatbot is an AI-powered web application that facilitates real-time interaction with users. Using the advanced Ollama Llama 2 model, this chatbot is built with Flask for the backend and HTML, CSS, and jQuery for a responsive and user-friendly interface. It supports instant messaging, chat history, and can be customized with additional data to answer specific questions, making it ideal for various applications, including educational support.
 To run this deep learning based chatbot you need to download the llama2:latest from the link given below:
 [Download llama2:latest](https://ollama.com/library/llama2)
+I downloaded this in the ubuntu 20.04 wsl
 
 ## Features
 
@@ -53,6 +54,7 @@ Scroll through the chat history displayed on the left side of the interface.
 
 Screenshots
 ![ss](https://github.com/Shrinkhal01/CHATBOT-LLama-2/assets/97280075/ce4e3afd-8551-499a-a430-b06c832a1712)
+
 
 
 License
