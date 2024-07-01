@@ -21,28 +21,17 @@
         }
 
         #chat-container {
-    width: 90%;
-    max-width: 1600px;
-    height: 90%; /* Adjust height as needed */
-    max-height: 90%; /* Adjust max-height as needed */
-    background-color: #2c2c2c;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    overflow: hidden;
-    margin: 10px; /* Add margin to create space around the chat container */
-}
-
-#chat-history {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    background-color: #2c2c2c;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin: 0; /* Remove any default margin */
-}
+            width: 90%;
+            max-width: 1600px;
+            height: 90%;
+            max-height: 80%;
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            overflow: hidden;
+            flex-direction: column;
+        }
 
         #chat-interface {
             width: 100%;
@@ -51,7 +40,18 @@
             flex-direction: column;
         }
 
-        
+        #chat-history {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #2a2a2a;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-height: 100%;
+            border-bottom: 1px solid #444;
+        }
+
         .message-container {
             display: flex;
             align-items: flex-start;
@@ -165,7 +165,7 @@
 
     <script>
         $(document).ready(function() {
-const chatHistory = JSON.parse('{{ chat_history | tojson }}'); 
+            const chatHistory = {{ chat_history | tojson | safe }}; // Assuming this is correctly populated by Flask
 
             function appendMessage(role, message) {
                 const avatar = role === 'user' ? 'static/user.jpg' : 'static/artificial-intelligence.png';
@@ -212,8 +212,6 @@ const chatHistory = JSON.parse('{{ chat_history | tojson }}');
                     sendMessage();
                 }
             });
-
-            // Display initial chat history
             chatHistory.forEach(item => {
                 appendMessage(item.role, item.content);
             });
