@@ -4,6 +4,7 @@ The Ollama Chatbot is an AI-powered web application that facilitates real-time i
 To run this deep learning based chatbot you need to download the llama2:latest from the link given below:
 [Download llama2:latest](https://ollama.com/library/llama2)
 I downloaded this in the ubuntu 20.04 wsl
+You can download it on windows too so no issues there.
 
 ## Features
 
@@ -53,7 +54,10 @@ Viewing Chat History:
 Scroll through the chat history displayed on the left side of the interface.
 
 Screenshots
+![ubuntu](https://github.com/Shrinkhal01/CHATBOT-LLama-2/assets/97280075/22a9aaf6-2e7f-4b16-a532-e2aa67122ad1)
+
 ![ss](https://github.com/Shrinkhal01/CHATBOT-LLama-2/assets/97280075/ce4e3afd-8551-499a-a430-b06c832a1712)
+
 
 
 
