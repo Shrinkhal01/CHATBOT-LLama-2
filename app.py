@@ -45,7 +45,6 @@ class OllamaChatbot:
                     except (json.JSONDecodeError, KeyError) as e:
                         print(f"\nError parsing response: {e}")
                         return
-            yield full_response
         else:
             try:
                 return response.json()['response']
