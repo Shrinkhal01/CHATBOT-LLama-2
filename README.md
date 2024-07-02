@@ -19,7 +19,7 @@ The Ollama Chatbot is an AI-powered web application that facilitates real-time i
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/ollama-chatbot.git
+   git clone https://github.com/Shrinkhal01/CHATBOT-LLama-2
    cd ollama-chatbot
 Install dependencies:
 
