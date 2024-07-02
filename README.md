@@ -24,36 +24,35 @@ The Ollama Chatbot is an AI-powered web application that facilitates real-time i
 Install dependencies:
 
 bash
-Copy code
-pip install flask requests
-Download the Ollama Llama 2 model:
+-Copy code
+-pip install flask requests
+-Download the Ollama Llama 2 model: (https://ollama.com/library/llama2)
+-You can download the pre-trained Ollama Llama 2 model from the Ollama GitHub repository.
 
-You can download the pre-trained Ollama Llama 2 model from the Ollama GitHub repository.
+-Run the application:
 
-Run the application:
+-bash
+-Copy code
+-python app.py
+-Open your web browser:
 
-bash
-Copy code
-python app.py
-Open your web browser:
+-Navigate to http://localhost:5000 to start using the chatbot.
 
-Navigate to http://localhost:5000 to start using the chatbot.
+-File Structure
+-app.py: Backend Flask application handling bot interactions.
+-templates/index.html: Frontend HTML providing the chat interface.
+-static/:
+-artificial-intelligence.png: Bot avatar image.
+-user.jpg: User avatar image.
+-chat_history.json: Stores chat history for persistent conversations.
+-Usage
+-Sending Messages:
+-Type your message in the input field and press Enter or click Send to send it.
 
-File Structure
-app.py: Backend Flask application handling bot interactions.
-templates/index.html: Frontend HTML providing the chat interface.
-static/:
-artificial-intelligence.png: Bot avatar image.
-user.jpg: User avatar image.
-chat_history.json: Stores chat history for persistent conversations.
-Usage
-Sending Messages:
-Type your message in the input field and press Enter or click Send to send it.
+-Viewing Chat History:
+-Scroll through the chat history displayed on the left side of the interface.
 
-Viewing Chat History:
-Scroll through the chat history displayed on the left side of the interface.
-
-Screenshots
+-Screenshots
 ![ubuntu](https://github.com/Shrinkhal01/CHATBOT-LLama-2/assets/97280075/22a9aaf6-2e7f-4b16-a532-e2aa67122ad1)
 
 ![ss](https://github.com/Shrinkhal01/CHATBOT-LLama-2/assets/97280075/ce4e3afd-8551-499a-a430-b06c832a1712)
@@ -64,8 +63,8 @@ Screenshots
 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-Contributing
-Feel free to contribute to this project! Fork it and submit a pull request with any improvements or features you'd like to add.
+-Contributing
+-Feel free to contribute to this project! Fork it and submit a pull request with any improvements or features you'd like to add.
 
 About
-This project was developed by Shrinkhal. Contact me at shrinkhalshrinkhal22@gmail.com for any questions or feedback.
+-This project was developed by Shrinkhal. Contact me at shrinkhalshrinkhal22@gmail.com for any questions or feedback.
